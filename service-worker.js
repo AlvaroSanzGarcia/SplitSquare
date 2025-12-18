@@ -1,17 +1,24 @@
 const CACHE_NAME = 'splitsquare-v1';
 const urlsToCache = [
-  '/',
-  '/SplitSquare/index.html',
-  '/SplitSquare/css/index_styles.css',
-  '/SplitSquare/js/main.js',
-  '/SplitSquare/img/SplitSquareLogo.png',
-  '/SplitSquare/manifest.json'
+  './',
+  './index.html',
+  './css/index_styles.css',
+  './js/main.js',
+  './img/SplitSquareLogo.png',
+  './manifest.json'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
+      return Promise.all(
+        urlsToCache.map(url =>
+          fetch(url).then(response => {
+            if (!response.ok) throw new Error(`Request failed: ${url}`);
+            return cache.put(url, response);
+          })
+        )
+      );
     })
   );
 });
