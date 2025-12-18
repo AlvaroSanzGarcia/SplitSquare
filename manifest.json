@@ -4,7 +4,7 @@
     "description": "Split expenses easily and settle balances with friends",
     "theme_color": "#501616",
     "background_color": "#cccccc",
-    "display": "browser",
+    "display": "standalone",
     "orientation": "portrait",
     "scope": "/",
     "start_url": "/index.html",
